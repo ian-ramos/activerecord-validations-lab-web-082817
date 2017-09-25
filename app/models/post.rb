@@ -7,10 +7,10 @@ class Post < ActiveRecord::Base
   validate :non_clickbait
 
   def non_clickbait
-    array = ["Won't Believe", "Secret", "Guess"]
+    array = [/Won't Believe/, /Secret/, /Top \d/, /Guess/]
     if self.title
       array.each do |string|
-        if self.title.include?(string)
+        if self.title.match(string) #need to use match here for regex, if array was strings, you'd use include?
           return # if title includes phrase, then it's fine
         end
       end
